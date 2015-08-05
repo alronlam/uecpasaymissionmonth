@@ -1,7 +1,61 @@
+#parent-container{
+	height:27%;
+}
+#sub-container{
+	padding-top: 20px;
+}
+
 .jumbotron{
-	height:60%;
+	height:70%;
     background-image:url('../resources/banner/mission1.jpg');
     background-size: cover;
     background-attachment: fixed;
     background-position: center center; 
+
+	margin-bottom: 0;
+
+	padding-left: 50px;
+
+    color: #FFF;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.footer{
+	height: 3%;
+	background-color: #455A64;
+	color: #FFFFFF;
+	width: 100%
+}
+
+/* This arrangement matters */
+.footer-text{
+	color: #B6B6B6;
+}
+.footer-text:visited{
+	color: #B6B6B6;
+}
+.footer-text:hover{
+	color: #CFD8DC;
+}
+
+#moreinfo{
+
 }

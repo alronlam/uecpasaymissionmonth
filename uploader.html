@@ -11,7 +11,7 @@
 <body>
 
    <div class="jumbotron">
-        <h2>Facebook Tagger</h2>
+        <h1>Mission Month</h1>
 
         <!-- Enctype MUST be multipart/form-data for file upload -->
         <form action="uploader.php" method="post" enctype="multipart/form-data">
@@ -20,22 +20,41 @@
             <!-- Alternatively, you can code your website to display errors wherever you like -->
             <?php @print( $fbtOutput ); ?>
         
-            Please upload your picture (JPEG or JPG format):<br />
-            <input type="file" name="picture_upload" />
+            <p>Upload your Facebook profile picture:</p>
+            <span class="btn btn-file btn-primary btn-lg">
+                Choose File...  <input type="file" name="picture_upload" />
+            </span>
             
             <br /><br />
-            <input class="btn btn-primary btn-lg" type="submit" name="submit" value="Tag me!" />
+            <input class="btn btn-success btn-lg" type="submit" name="submit" value="Generate >>" />
         
         </form>
-     
+
     </div>
-
-
-	
-	
-	<br /><hr />
-    <i>For more information, please contact Sister <a href="https://www.facebook.com/anapatriciamayoca?fref=ts" target="_blank">Ana Mayoca</a>.</i>
-
+    <div class="container" id="parent-container">
+        <div class="container" id="sub-container">
+            <div class="row" id="moreinfo">
+              <div class="col-md-4">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. </p>
+              </div>
+              <div class="col-md-4"> 
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                aliquip ex ea commodo consequat. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                doloremque laudantium, totam rem aperiam.</p>
+              </div>
+              <div class="col-md-4"> 
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                doloremque laudantium, totam rem aperiam. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.</p>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <i>For more information, please contact Sister <a class="footer-text" href="https://www.facebook.com/anapatriciamayoca?fref=ts" target="_blank">Ana Mayoca</a>.</i>
+    </div>
     
  
 </body>
