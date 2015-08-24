@@ -79,5 +79,42 @@ $_SESSION['fb_access_token'] = (string) $accessToken;
 // You can redirect them to a members-only page.
 //header('Location: https://example.com/members.php');
 
+$res = $fb->get( '/me/picture?type=large&redirect=false', (string) $accessToken );
+ 
+$picture = $res->getGraphObject();
+ 
+// var_dump( $picture );
+
+// $ch = curl_init($picture["url"]);
+// $fp = fopen('/resources/profilepic.jpg', 'wb');
+// curl_setopt($ch, CURLOPT_FILE, $fp);
+// curl_setopt($ch, CURLOPT_HEADER, 0);
+// curl_exec($ch);
+// curl_close($ch);
+// fclose($fp);
+
+echo "TESTING";
+
+$data = [
+  'message' => 'Made with uecpasaymissionmonth.orgfree.com #UECPasayMissionMonth2015 ',
+  'source' => $fb->fileToUpload( __DIR__.'/resources/overlay.png'),
+];
+
+try {
+  // Returns a `Facebook\FacebookResponse` object
+  $response = $fb->post('/me/photos', $data, (string) $accessToken);
+} catch(Facebook\Exceptions\FacebookResponseException $e) {
+  echo 'Graph returned an error: ' . $e->getMessage();
+  exit;
+} catch(Facebook\Exceptions\FacebookSDKException $e) {
+  echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  exit;
+}
+
+$graphNode = $response->getGraphNode();
+
+echo 'Photo ID: ' . $graphNode['id'];
+
+header('Location: http://www.facebook.com/photo.php?fbid='.$graphNode['id'].'&id=abc&makeprofile=1')
 
 ?>
