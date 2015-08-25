@@ -146,7 +146,7 @@ try {
 }
 
 // Delete the processed image once posted to facebook
-
+unlink($processedImgPath);
 
 /*** REDIRECT USER TO CHANGE HIS PROFILE PICTURE ***/
 $graphNode = $response->getGraphNode();
