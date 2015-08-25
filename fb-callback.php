@@ -79,30 +79,64 @@ $_SESSION['fb_access_token'] = (string) $accessToken;
 // You can redirect them to a members-only page.
 //header('Location: https://example.com/members.php');
 
-$res = $fb->get( '/me/picture?type=large&redirect=false', (string) $accessToken );
+/*** GET THE USER's PROFILE PICTURE ***/
+$res = $fb->get( '/me/picture?width=540&height=540&redirect=false', (string) $accessToken );
  
 $picture = $res->getGraphObject();
- 
-// var_dump( $picture );
 
-// $ch = curl_init($picture["url"]);
-// $fp = fopen('/resources/profilepic.jpg', 'wb');
-// curl_setopt($ch, CURLOPT_FILE, $fp);
-// curl_setopt($ch, CURLOPT_HEADER, 0);
-// curl_exec($ch);
-// curl_close($ch);
-// fclose($fp);
+// print_r($res);
+$imageUrl = $picture->getProperty('url');
 
-echo "TESTING";
+// // Read image path, convert to base64 encoding
+// $imageData = base64_encode(file_get_contents($imageUrl));
+
+// // Format the image SRC:  data:{mime};base64,{data};
+// $src = 'data: '.mime_content_type($imageUrl).';base64,'.$imageData;
+
+
+/*** OVERLAY THE PICTURE HERE ***/
+
+// header ("Content-type: image/jpeg");   
+// Defining the background image. Optionally, a .png image   // could be used using imagecreatefrompng   
+$profpic = imagecreatefromjpeg(__DIR__.'/resources/profpic.jpg');   
+// Defining the pocket image     
+$overlay = imagecreatefrompng( __DIR__.'/resources/overlay.png');   
+
+// Get pocket image width and hight for later use  
+
+$insert_x = imagesx($overlay);   $insert_y = imagesy($overlay);   
+// Combine the images into a single output image   
+imagecopymerge($profpic,$overlay,0,0,0,0,$insert_x,$insert_y,50);   
+
+// Output the results as a jpg image,   
+//you can also generate output as png, gif as per your requirement    
+
+$uuid = uniqid();
+$processedImgPath = __DIR__.'/resources/processed_'.$uuid.'.jpg';
+// imagejpeg($profpic);
+imagejpeg($profpic, $processedImgPath);
+imagedestroy($profpic);
+
+
+/*** POST TO THE PROFILE PICTURES ALBUM ***/
+	$albums = $fb->get("/me/albums", (string) $accessToken);
+	$album_id = ""; 
+	foreach($albums->getDecodedBody() as $item){
+		if($item["type"] == "profile"){
+			$album_id = $item["id"];
+			break;
+		}
+	}
 
 $data = [
-  'message' => 'Made with uecpasaymissionmonth.orgfree.com #UECPasayMissionMonth2015 ',
-  'source' => $fb->fileToUpload( __DIR__.'/resources/overlay.png'),
+  'caption' => 'Made with uecpasaymissionmonth.orgfree.com #UECPasayMissionMonth2015 ',
+  'source' => $fb->fileToUpload($processedImgPath),
 ];
 
 try {
   // Returns a `Facebook\FacebookResponse` object
-  $response = $fb->post('/me/photos', $data, (string) $accessToken);
+	$response = $fb->post('/'.$album_id.'/photos', $data, (string) $accessToken);
+  // $response = $fb->post('/me/photos', $data, (string) $accessToken);
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   echo 'Graph returned an error: ' . $e->getMessage();
   exit;
@@ -111,10 +145,12 @@ try {
   exit;
 }
 
+// Delete the processed image once posted to facebook
+
+
+/*** REDIRECT USER TO CHANGE HIS PROFILE PICTURE ***/
 $graphNode = $response->getGraphNode();
-
 echo 'Photo ID: ' . $graphNode['id'];
-
 header('Location: http://www.facebook.com/photo.php?fbid='.$graphNode['id'].'&id=abc&makeprofile=1')
 
 ?>

@@ -1,5 +1,6 @@
 <?php
-echo "Hello World"
+echo 'HELLO WORLD';
+echo phpinfo();
 // define('FACEBOOK_SDK_V4_SRC_DIR', '/facebook-php-sdk-v4-4.0-dev/src/Facebook/');
 // require __DIR__ . '/path/to/facebook-php-sdk-v4/autoload.php';
 
