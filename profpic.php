@@ -163,8 +163,8 @@ unlink($processedImgPath);
 /*** REDIRECT USER TO CHANGE HIS PROFILE PICTURE ***/
 $graphNode = $response->getGraphNode();
 // echo 'Photo ID: ' . $graphNode['id'];
-
-header('Location: http://www.facebook.com/photo.php?fbid='.$graphNode['id'].'&id=abc&makeprofile=1')
+$redirectUrl = 'http://www.facebook.com/photo.php?fbid='.$graphNode['id'].'&id=abc&makeprofile=1';
+header('Location: '.$redirectUrl);
 
 
 ?>
