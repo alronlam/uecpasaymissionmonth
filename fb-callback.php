@@ -98,11 +98,17 @@ $imageUrl = $picture->getProperty('url');
 
 // header ("Content-type: image/jpeg");   
 // Defining the background image. Optionally, a .png image   // could be used using imagecreatefrompng   
-$profpic = imagecreatefromjpeg($imageUrl);   
-var_dump($profpic);
-imagejpeg($profpic, __DIR__.'/resources/loadedprofpic.jpg');
-// Defining the pocket image     
-$overlay = imagecreatefrompng( __DIR__.'/resources/overlay.png');   
+
+$profPicData = $res->getDecodedBody()['data'];
+
+ 
+$overlay = imagecreatefrompng( __DIR__.'/resources/overlay.png'); 
+$profpicRaw = imagecreatefromjpeg($imageUrl);  
+$profpic = imagecreatefrompng( __DIR__.'/resources/blank.png'); 
+$success = imagecopyresized($profpic, $profpicRaw, 0, 0, 0, 0,  540, 540, $profPicData['width'], $profPicData['height']);
+
+// include 'resize.php';  
+// $overlay = smart_resize_image($image, $profPicData['width'], $profPicData['height']);
 
 // Get pocket image width and hight for later use  
 
