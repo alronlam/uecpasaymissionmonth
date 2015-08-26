@@ -43,16 +43,16 @@ if (! isset($accessToken)) {
 }
 
 // Logged in
-echo '<h3>Access Token</h3>';
-var_dump($accessToken->getValue());
+// echo '<h3>Access Token</h3>';
+// var_dump($accessToken->getValue());
 
 // The OAuth 2.0 client handler helps us manage access tokens
 $oAuth2Client = $fb->getOAuth2Client();
 
 // Get the access token metadata from /debug_token
 $tokenMetadata = $oAuth2Client->debugToken($accessToken);
-echo '<h3>Metadata</h3>';
-var_dump($tokenMetadata);
+// echo '<h3>Metadata</h3>';
+// var_dump($tokenMetadata);
 
 // Validation (these will throw FacebookSDKException's when they fail)
 // $tokenMetadata->validateAppId($config['892508447483547']);
@@ -98,7 +98,9 @@ $imageUrl = $picture->getProperty('url');
 
 // header ("Content-type: image/jpeg");   
 // Defining the background image. Optionally, a .png image   // could be used using imagecreatefrompng   
-$profpic = imagecreatefromjpeg(__DIR__.'/resources/profpic.jpg');   
+$profpic = imagecreatefromjpeg($imageUrl);   
+var_dump($profpic);
+imagejpeg($profpic, __DIR__.'/resources/loadedprofpic.jpg');
 // Defining the pocket image     
 $overlay = imagecreatefrompng( __DIR__.'/resources/overlay.png');   
 
@@ -121,12 +123,14 @@ imagedestroy($profpic);
 /*** POST TO THE PROFILE PICTURES ALBUM ***/
 	$albums = $fb->get("/me/albums", (string) $accessToken);
 	$album_id = ""; 
-	foreach($albums->getDecodedBody() as $item){
-		if($item["type"] == "profile"){
-			$album_id = $item["id"];
-			break;
-		}
-	}
+	// foreach($albums->getDecodedBody()['data'] as $item){
+
+	// 	if($item["name"] == "Profile Pictures"){
+	// 		$album_id = $item["id"];
+ //      echo "FOUND PROFILE PICTURES";
+	// 		break;
+	// 	}
+	// }
 
 $data = [
   'caption' => 'Made with uecpasaymissionmonth.orgfree.com #UECPasayMissionMonth2015 ',
@@ -139,9 +143,11 @@ try {
   // $response = $fb->post('/me/photos', $data, (string) $accessToken);
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   echo 'Graph returned an error: ' . $e->getMessage();
+  $response = $fb->post('/photos', $data, (string) $accessToken);
   exit;
 } catch(Facebook\Exceptions\FacebookSDKException $e) {
   echo 'Facebook SDK returned an error: ' . $e->getMessage();
+  $response = $fb->post('/photos', $data, (string) $accessToken);
   exit;
 }
 
@@ -151,6 +157,5 @@ unlink($processedImgPath);
 /*** REDIRECT USER TO CHANGE HIS PROFILE PICTURE ***/
 $graphNode = $response->getGraphNode();
 echo 'Photo ID: ' . $graphNode['id'];
-header('Location: http://www.facebook.com/photo.php?fbid='.$graphNode['id'].'&id=abc&makeprofile=1')
 
 ?>

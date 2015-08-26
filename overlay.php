@@ -4,7 +4,7 @@
 // Defining the background image. Optionally, a .png image   // could be used using imagecreatefrompng   
 $background = imagecreatefromjpeg(__DIR__.'/resources/profpic.jpg');   
 // Defining the pocket image     
-$pkt = imagecreatefrompng( __DIR__.'/resources/overlay.png');   
+$pkt = imagecreatefrompng( __DIR__.'/resources/overlay5.png');   
 
 // Get pocket image width and hight for later use  
 
