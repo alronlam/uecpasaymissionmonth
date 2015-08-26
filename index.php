@@ -16,7 +16,7 @@ session_start();
 
 $helper = $fb->getRedirectLoginHelper();
 $permissions = ['user_photos', 'publish_actions'];
-$loginUrl = $helper->getLoginUrl('http://uecpasaymissionmonth.orgfree.com/fb-callback.php', $permissions);
+$loginUrl = $helper->getLoginUrl('http://uecpasaymissionmonth.orgfree.com/profpic.php', $permissions);
 header('Location: '.$loginUrl);
 
 ?>
