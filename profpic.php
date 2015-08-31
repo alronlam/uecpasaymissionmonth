@@ -132,16 +132,16 @@ imagedestroy($profpic);
 $data = [
   'caption' => 
 
-  'Show your support to our missionaries around the world by using this filter for your Facebook profile pic. Let us encourage them as they share the gospel of Jesus Christ in different places by keeping them in our prayers.
+  'Show your support to our missionaries around the world by using this filter for your Facebook profile pic. Let us encourage them as they share the gospel of Jesus Christ in different places by keeping them in our prayers. #gogivepray
 
-  Click on this link to add the filter to your profile picture (currently supports only laptops and tablets; mobile phones will not work):
+  Click on this link to add the filter to your profile picture:
   uecpasaymissionmonth.orgfree.com
+  (currently supports only laptops and tablets; if you\'re on a mobile phone, use a browser instead of the Facebook app)
+
   If the previous link does not work for you, please use this instead: 
   uecpasaymissionmonth.orgfree.com/uploader.php
 
-  For more information about Mission Month, please visit facebook.com/UECPasay
-
-  #gogivepray',
+  For more information about Mission Month, please visit facebook.com/UECPasay',
   'source' => $fb->fileToUpload($processedImgPath),
 ];
 
