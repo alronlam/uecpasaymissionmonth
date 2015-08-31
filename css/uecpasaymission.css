@@ -1,13 +1,8 @@
-#parent-container{
-	height:27%;
-}
-#sub-container{
-	padding-top: 20px;
-}
 
-.jumbotron{
-	height:70%;
-    background-image:url('../resources/banner/mission1.jpg');
+/*
+.jumbotron-uecpasay{
+	height:97%;
+    background-image:url('../resources/banner/mission1.jpg') !important;
     background-size: cover;
     background-attachment: fixed;
     background-position: center center; 
@@ -17,7 +12,7 @@
 	padding-left: 50px;
 
     color: #FFF;
-}
+}*/
 
 .btn-file {
     position: relative;
@@ -38,14 +33,14 @@
     cursor: inherit;
     display: block;
 }
-.footer{
+/*.footer{
 	height: 3%;
 	background-color: #455A64;
 	color: #FFFFFF;
 	width: 100%
 }
 
-/* This arrangement matters */
+/* This arrangement matters 
 .footer-text{
 	color: #B6B6B6;
 }
@@ -58,4 +53,4 @@
 
 #moreinfo{
 
-}
+}*/

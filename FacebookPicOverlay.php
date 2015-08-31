@@ -34,14 +34,14 @@ class FacebookPicOverlay {
 	// ** FACEBOOK DEFAULT CONFIGURATION
 	# Set the maximum height and width of the Facebook profile picture here:
 	# (default: 200 x 600) -- Facebook may have changed them after this script was released
-	var $fbWidth 	= 2000;
-	var $fbHeight	= 2000;
+	var $fbWidth 	= 540;
+	var $fbHeight	= 540;
 	
 	// ** OVERLAY MODE CONFIGURATION
 	
 	# Overlay image filename and extension (must be placed in the resources folder):
 	# (default: "overlay.png")
-	var $overlay     = "overlay.png";
+	var $overlay     = "overlay3.png";
 	
 	# Overlay offset from bottom. This will change based on your overlay image.
 	# 0 means your overlay image will be placed on the direct bottom of the image,
@@ -150,42 +150,101 @@ class FacebookPicOverlay {
 			return false;
 		}
 		
-		$new = array();
+		$this->uploadedInfo = getimagesize($this->uploaded['tmp_name']);
+		$overlay = imagecreatefrompng( __DIR__.'/resources/overlay5.png'); 
+		$profpicRaw = imagecreatefromjpeg($this->uploaded['tmp_name']);  
+		$profpic = imagecreatefrompng( __DIR__.'/resources/blank.png'); 
+		$success = imagecopyresized($profpic, $profpicRaw, 0, 0, 0, 0,  540, 540, $this->uploadedInfo[0], $this->uploadedInfo[1]);
+
+		// i
+		// include 'resize.php';  
+		// $overlay = smart_resize_image($image, $profPicData['width'], $profPicData['height']);
+
+		// Get pocket image width and hight for later use  
+
+		$insert_x = imagesx($overlay);   $insert_y = imagesy($overlay);   
+		// Combine the images into a single output image   
+		imagecopymerge($profpic,$overlay,0,0,0,0,$insert_x,$insert_y,50);   
+
+		// Output the results as a jpg image,   
+		//you can also generate output as png, gif as per your requirement   
+
+		$uuid = uniqid();
+		$filename = '/processed_'.$uuid.'.jpg';
+		$processedImgPath = $this->processedFolder . $filename;
+		// imagejpeg($profpic);
+		imagejpeg($profpic, $processedImgPath);
+		imagedestroy($profpic);
+
+		return ($this->processedFolder.$filename);
+
+	// 	$new = array();
 		
-		$new[0] = $this->fbWidth;	
-		$new[1] = ( $new[0] * $this->uploadedInfo[1] ) / $this->uploadedInfo[0];
+	// 	$new[0] = $this->fbWidth;	
+	// 	$new[1] = ( $new[0] * $this->uploadedInfo[1] ) / $this->uploadedInfo[0];
 		
-		if( ( $new[1] + $overlaySize[1] ) > $this->fbHeight )
-			$canvasH = $this->fbHeight;
-		else
-			$canvasH = $new[1];
+	// 	if( ( $new[1] + $overlaySize[1] ) > $this->fbHeight )
+	// 		$canvasH = $this->fbHeight;
+	// 	else
+	// 		$canvasH = $new[1];
 		
-		$src = imagecreatefromjpeg( $this->uploaded['tmp_name'] );
+	// 	$src = imagecreatefromjpeg( $this->uploaded['tmp_name'] );
 		
-		$tmp = imagecreatetruecolor( $new[0], $canvasH );
-		imagecopyresampled( $tmp, $src, 0, 0, 0, 0, $new[0], $new[1], $this->uploadedInfo[0], $this->uploadedInfo[1] );
+	// 	$tmp = imagecreatetruecolor( $new[0], $canvasH );
+	// 	imagecopyresampled( $tmp, $src, 0, 0, 0, 0, $new[0], $new[1], $this->uploadedInfo[0], $this->uploadedInfo[1] );
 		
-		imagealphablending( $tmp, true );
-		$overlayRes = imagecreatefrompng( $overlay );
+	// 	imagealphablending( $tmp, true );
+	// 	$overlayRes = imagecreatefrompng( $overlay );
 		
-		do{
-			$filename = time() . "-processed.jpg";
-			$file = $this->rootPath . $this->processedFolder . $filename;
-		}while( file_exists( $file ) );
+	// 	do{
+	// 		$filename = time() . "-processed.jpg";
+	// 		$file = $this->rootPath . $this->processedFolder . $filename;
+	// 	}while( file_exists( $file ) );
 		
-		imagecopy( $tmp, $overlayRes, 0, ( ( $new[1] + $this->offset ) - $overlaySize[1] ), 0, 0, $overlaySize[0], $overlaySize[1] );
-		imagejpeg( $tmp, $file, $this->quality );
+	// 	imagecopy( $tmp, $overlayRes, 0, ( ( $new[1] + $this->offset ) - $overlaySize[1] ), 0, 0, $overlaySize[0], $overlaySize[1] );
+	// 	imagejpeg( $tmp, $file, $this->quality );
 		
-		if( !file_exists( $file ) )
-			$file = $this->rootPath . $this->resourcesFolder . $this->oops;
+	// 	if( !file_exists( $file ) )
+	// 		$file = $this->rootPath . $this->resourcesFolder . $this->oops;
 			
-		imagedestroy( $src );
-		imagedestroy( $tmp );
-		imagedestroy( $overlayRes );
+	// 	imagedestroy( $src );
+	// 	imagedestroy( $tmp );
+	// 	imagedestroy( $overlayRes );
 		
-		return ( $this->processedFolder . $filename );
+	// 	return ( $this->processedFolder . $filename );
 		
 	}
+
+	// public function overlay($uploaded){
+
+	// 	$this->uploadedInfo = getimagesize($this->uploaded['tmp_name']);
+
+	// 	$overlay = imagecreatefrompng( __DIR__.'/resources/overlay5.png'); 
+	// 	$profpicRaw = imagecreatefromjpeg($this->uploaded['tmp_name']);  
+	// 	$profpic = imagecreatefrompng( __DIR__.'/resources/blank.png'); 
+	// 	$success = imagecopyresized($profpic, $profpicRaw, 0, 0, 0, 0,  540, 540, $this->uploadedInfo['width'], $this->uploadedInfo['height']);
+
+	// 	// i
+	// 	// include 'resize.php';  
+	// 	// $overlay = smart_resize_image($image, $profPicData['width'], $profPicData['height']);
+
+	// 	// Get pocket image width and hight for later use  
+
+	// 	$insert_x = imagesx($overlay);   $insert_y = imagesy($overlay);   
+	// 	// Combine the images into a single output image   
+	// 	imagecopymerge($profpic,$overlay,0,0,0,0,$insert_x,$insert_y,50);   
+
+	// 	// Output the results as a jpg image,   
+	// 	//you can also generate output as png, gif as per your requirement   
+
+	// 	$uuid = uniqid();
+	// 	$processedImgPath = __DIR__.'/resources/processed_'.$uuid.'.jpg';
+	// 	// imagejpeg($profpic);
+	// 	imagejpeg($profpic, $processedImgPath);
+	// 	imagedestroy($profpic);
+
+	// 	return ($processedImgPath);
+	// }
 	
 	# Deletes all files in the processed folder that were created before $timestamp
 	# Defaults to 2 days ago

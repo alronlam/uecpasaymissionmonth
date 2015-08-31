@@ -29,7 +29,6 @@ try {
 }
 
 if (! isset($accessToken)) {
-
   if ($helper->getError()) {
     header('HTTP/1.0 401 Unauthorized');
     echo "Error: " . $helper->getError() . "\n";
@@ -86,12 +85,18 @@ $res = $fb->get( '/me/picture?width=540&height=540&redirect=false', (string) $ac
  
 $picture = $res->getGraphObject();
 
+// print_r($res);
 $imageUrl = $picture->getProperty('url');
+
+// // Read image path, convert to base64 encoding
+// $imageData = base64_encode(file_get_contents($imageUrl));
+
+// // Format the image SRC:  data:{mime};base64,{data};
+// $src = 'data: '.mime_content_type($imageUrl).';base64,'.$imageData;
 
 
 /*** OVERLAY THE PICTURE HERE ***/
 
-// header ("Content-type: image/jpeg");   
 // Defining the background image. Optionally, a .png image   // could be used using imagecreatefrompng   
 
 $profPicData = $res->getDecodedBody()['data'];
@@ -112,61 +117,13 @@ imagecopymerge($profpic,$overlay,0,0,0,0,$insert_x,$insert_y,50);
 
 $uuid = uniqid();
 $processedImgPath = __DIR__.'/resources/processed_'.$uuid.'.jpg';
-// imagejpeg($profpic);
-imagejpeg($profpic, $processedImgPath);
+
+header ("Content-type: image/jpeg");   
+imagejpeg($profpic);
+
+// imagejpeg($profpic, $processedImgPath);
 imagedestroy($profpic);
 
-
-/*** POST TO THE PROFILE PICTURES ALBUM ***/
-	// $albums = $fb->get("/me/albums", (string) $accessToken);
-	// $album_id = ""; 
-	// foreach($albums->getDecodedBody()['data'] as $item){
-
-	// 	if($item["name"] == "Profile Pictures"){
-	// 		$album_id = $item["id"];
- //      echo "FOUND PROFILE PICTURES";
-	// 		break;
-	// 	}
-	// }
-
-$data = [
-  'caption' => 
-
-  'Show your support to our missionaries around the world by using this filter for your Facebook profile pic. Let us encourage them as they share the gospel of Jesus Christ in different places by keeping them in our prayers.
-
-  Click on this link to add the filter to your profile picture (currently supports only laptops and tablets; mobile phones will not work):
-  uecpasaymissionmonth.orgfree.com
-  If the previous link does not work for you, please use this instead: 
-  uecpasaymissionmonth.orgfree.com/uploader.php
-
-  For more information about Mission Month, please visit facebook.com/UECPasay
-
-  #gogivepray',
-  'source' => $fb->fileToUpload($processedImgPath),
-];
-
-try {
-  // Returns a `Facebook\FacebookResponse` object
-	$response = $fb->post('/'.$album_id.'/photos', $data, (string) $accessToken);
-  // $response = $fb->post('/me/photos', $data, (string) $accessToken);
-} catch(Facebook\Exceptions\FacebookResponseException $e) {
-  echo 'Graph returned an error: ' . $e->getMessage();
-  $response = $fb->post('/photos', $data, (string) $accessToken);
-  exit;
-} catch(Facebook\Exceptions\FacebookSDKException $e) {
-  echo 'Facebook SDK returned an error: ' . $e->getMessage();
-  $response = $fb->post('/photos', $data, (string) $accessToken);
-  exit;
-}
-
-// Delete the processed image once posted to facebook
-unlink($processedImgPath);
-
-/*** REDIRECT USER TO CHANGE HIS PROFILE PICTURE ***/
-$graphNode = $response->getGraphNode();
-// echo 'Photo ID: ' . $graphNode['id'];
-$redirectUrl = 'http://www.facebook.com/photo.php?fbid='.$graphNode['id'].'&id=abc&makeprofile=1';
-header('Location: '.$redirectUrl);
 
 
 ?>

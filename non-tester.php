@@ -15,11 +15,8 @@ $fb = new Facebook\Facebook([
 session_start();
 
 $helper = $fb->getRedirectLoginHelper();
-
-
-$permissions = ['user_photos', 'publish_actions'];
-$loginUrl = $helper->getLoginUrl('http://uecpasaymissionmonth.orgfree.com/profpic.php', $permissions);
-
+$permissions = ['user_photos'];
+$loginUrl = $helper->getLoginUrl('http://uecpasaymissionmonth.orgfree.com/non-tester-profpic.php', $permissions);
 header('Location: '.$loginUrl);
 
 ?>

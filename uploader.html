@@ -1,62 +1,54 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 
 <head>
-    <script src="js/jquery-1.11.3.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+
+
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/uecpasaymission.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Sample Uploader Page</title>
+     <link rel="stylesheet" type="text/css" href="css/uecpasaymission-success.css">
+
+     <!-- <link rel="stylesheet" type="text/css" href="css/uecpasaymission-success2.css"> -->
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <title>Mission Month Filter</title>
 </head>
 
 <body>
 
-   <div class="jumbotron">
-        <h1>Mission Month</h1>
+   <div class="container-fluid">
 
-        <!-- Enctype MUST be multipart/form-data for file upload -->
-        <form action="uploader.php" method="post" enctype="multipart/form-data">
-        
-            <!-- For ease-of-use sake I like to put error messages on the same page as uploads -->
-            <!-- Alternatively, you can code your website to display errors wherever you like -->
-            <?php @print( $fbtOutput ); ?>
-        
-            <p>Upload your Facebook profile picture:</p>
+        <div class="card container-fluid" style="margin: auto auto">
+      <!-- <div class="image">
+        <img src="resources/overlay3.png" >
+      </div> -->
+      <div class="content container-fluid">
+
+        <span class = "title">Add the Mission Month filter to your Facebook profile picture.</span>
+            <br/>
+            <p>
+            Make sure you have a copy of your Facebook profile picture on your device. Choose the file by clicking the blue button below, then click generate to obtain your new profile picture! 
+
+            <br/>
+            <br/>
+            For best results, use a square image.
+            </p>
+      </div>
+      <div class="action container-fluid">
+       <form action="uploader.php" method="post" enctype="multipart/form-data">
             <span class="btn btn-file btn-primary btn-lg">
-                Choose File...  <input type="file" name="picture_upload" />
-            </span>
-            
+                 <input type="file" name="picture_upload" />
+            </span>    
             <br /><br />
             <input class="btn btn-success btn-lg" type="submit" name="submit" value="Generate >>" />
-        
         </form>
+      </div>
+    </div>
 
-    </div>
-    <div class="container" id="parent-container">
-        <div class="container" id="sub-container">
-            <div class="row" id="moreinfo">
-              <div class="col-md-4">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. </p>
-              </div>
-              <div class="col-md-4"> 
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                aliquip ex ea commodo consequat. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                doloremque laudantium, totam rem aperiam.</p>
-              </div>
-              <div class="col-md-4"> 
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                doloremque laudantium, totam rem aperiam. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua.</p>
-              </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer">
-        <i>For more information, please contact Sister <a class="footer-text" href="https://www.facebook.com/anapatriciamayoca?fref=ts" target="_blank">Ana Mayoca</a>.</i>
-    </div>
-    
- 
+     <script type="text/javascript" src="js/uecpasaymission-success2.js"></script>
+
+
 </body>
 
 </html>
