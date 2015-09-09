@@ -97,7 +97,7 @@ $imageUrl = $picture->getProperty('url');
 $profPicData = $res->getDecodedBody()['data'];
 
  
-$overlay = imagecreatefrompng( __DIR__.'/resources/overlay3.png'); 
+$overlay = imagecreatefrompng( __DIR__.'/resources/overlay2.png'); 
 $profpicRaw = imagecreatefromjpeg($imageUrl);  
 $profpic = imagecreatefrompng( __DIR__.'/resources/blank.png'); 
 $success = imagecopyresized($profpic, $profpicRaw, 0, 0, 0, 0,  540, 540, $profPicData['width'], $profPicData['height']);
@@ -132,7 +132,7 @@ imagedestroy($profpic);
 $data = [
   'caption' => 
 
-  'Show your support to our missionaries around the world by using this filter for your Facebook profile pic. Let us encourage them as they share the gospel of Jesus Christ in different places by keeping them in our prayers. #gogivepray
+  'Show your support to our missionaries around the world by using this filter for your Facebook profile pic. Let us encourage them as they share the gospel of Jesus Christ in different places by keeping them in our prayers. #praygivego
 
   Click on this link to add the filter to your profile picture:
   uecpasaymissionmonth.orgfree.com
@@ -141,7 +141,7 @@ $data = [
   If the previous link does not work for you, please use this instead: 
   uecpasaymissionmonth.orgfree.com/uploader.php
 
-  For more information about Mission Month, please visit facebook.com/UECPasay',
+  For more information about Missions Month, please visit facebook.com/UECPasay',
   'source' => $fb->fileToUpload($processedImgPath),
 ];
 

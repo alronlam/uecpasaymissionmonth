@@ -41,7 +41,7 @@ class FacebookPicOverlay {
 	
 	# Overlay image filename and extension (must be placed in the resources folder):
 	# (default: "overlay.png")
-	var $overlay     = "overlay3.png";
+	var $overlay     = "overlay2.png";
 	
 	# Overlay offset from bottom. This will change based on your overlay image.
 	# 0 means your overlay image will be placed on the direct bottom of the image,
@@ -145,14 +145,20 @@ class FacebookPicOverlay {
 			return false;
 		}
 		
-		if( $this->uploadedInfo['mime'] != "image/jpeg" && $this->uploadedInfo['mime'] != "image/jpg" ){
-			$this->throwErr( "The file you have chosen to upload is the wrong file type. Please choose a JPG or JPEG file only." );
+		if( $this->uploadedInfo['mime'] != "image/jpeg" && $this->uploadedInfo['mime'] != "image/jpg" && $this->uploadedInfo['mime'] != "image/png" ){
+			$this->throwErr( "The file you have chosen to upload is the wrong file type. Please choose a JPG or PNG file only." );
 			return false;
 		}
 		
 		$this->uploadedInfo = getimagesize($this->uploaded['tmp_name']);
-		$overlay = imagecreatefrompng( __DIR__.'/resources/overlay5.png'); 
-		$profpicRaw = imagecreatefromjpeg($this->uploaded['tmp_name']);  
+		$overlay = imagecreatefrompng( __DIR__.'/'.$this->resourcesFolder.$this->overlay); 
+
+
+		if( $this->uploadedInfo['mime'] == "image/jpeg" || $this->uploadedInfo['mime'] == "image/jpg")
+			$profpicRaw = imagecreatefromjpeg($this->uploaded['tmp_name']);  
+		else
+			$profpicRaw = imagecreatefrompng($this->uploaded['tmp_name']);
+		
 		$profpic = imagecreatefrompng( __DIR__.'/resources/blank.png'); 
 		$success = imagecopyresized($profpic, $profpicRaw, 0, 0, 0, 0,  540, 540, $this->uploadedInfo[0], $this->uploadedInfo[1]);
 
